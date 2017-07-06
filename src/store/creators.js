@@ -14,3 +14,7 @@ export const connectDevice = (address, channel) => ({
   address,
   channel,
 });
+
+export const dismissError = () => ({
+  type: actions.DISMISS_ERROR,
+});

@@ -2,6 +2,7 @@ import express from 'express';
 import http from 'http';
 import WebSocket from 'ws';
 import * as constants from './constants';
+import translate from './store/translation';
 
 const BTserial = new (require('bluetooth-serial-port')).BluetoothSerialPort(); // TODO
 
@@ -12,16 +13,13 @@ const webSocketServer = new WebSocket.Server({ server });
 let socketService;
 
 const sendMessage = (type, data) => {
+  console.log(type, data);
   socketService.send(
     JSON.stringify({
       type,
       data,
     }),
   );
-  console.log(JSON.stringify({
-    type,
-    data,
-  }));
 };
 
 const throwError = (error) => {
@@ -41,17 +39,45 @@ const getDeviceList = () => {
   });
 };
 
+const getDeviceDetails = () => {
+  const REQUEST_NUMBER_OF_RACERS = 'N0\n';
+  const REQUEST_BULK_DEVICE_STATE = 'R0A\n';
+  const REQUEST_RSSI_VALUES = 'R0V\n';
+  BTserial.write(new Buffer(REQUEST_NUMBER_OF_RACERS, 'utf-8'), (err) => {
+    if (err) throwError('Could not get number of racers');
+  });
+  BTserial.write(new Buffer(REQUEST_BULK_DEVICE_STATE, 'utf-8'), (err) => {
+    if (err) throwError('Could not get bulk device state');
+  });
+  BTserial.write(new Buffer(REQUEST_RSSI_VALUES, 'utf-8'), (err) => {
+    if (err) throwError('Could not get bulk device state');
+  });
+};
 const connectDevice = (address) => {
   BTserial.findSerialPortChannel(address, (channel) => {
-    BTserial.connect(address, channel, (device) => {
-      sendMessage(constants.SET_DEVICES, device);
-    }, throwError('Could establish a connection'));
-  }, throwError('Could not find a serial port'));
+    BTserial.connect(address, channel, () => {
+      sendMessage(constants.DEVICE_CONNECTED);
+      getDeviceDetails();
+    }, () => (throwError('Could not establish a connection')));
+  }, () => (throwError('Could not find a serial port')));
 };
 
-// BTserial.on('data', function(buffer) {
-//   console.log(buffer.toString('utf-8'))
-// })
+BTserial.on('data', (buffer) => {
+  translate(buffer);
+  // const responseCode = bufferString.charAt(0);
+  // console.log('CODE:', bufferString);
+  // switch (responseCode) {
+  //   case constants.NUMBER_OF_RACERS_CODE:
+  //     sendMessage(constants.SET_NUMBER_OF_RACERS, parseInt(bufferString.charAt(1), 10));
+  //     break;
+  //   case constants.BULK_DEVICE_STATE_CODE:
+  //     sendMessage(constants.SET_NUMBER_OF_RACERS, parseInt(bufferString.charAt(1), 10));
+  //     break;
+  //   default:
+  //     break;
+  // }
+});
+
 webSocketServer.on('connection', (ws) => {
   socketService = ws;
   BTserial.close();
@@ -65,6 +91,11 @@ webSocketServer.on('connection', (ws) => {
     };
 
     (actions[type] || actions.default)();
+  });
+
+  // Close bluetooth connction on close
+  ws.on('close', () => {
+    BTserial.close();
   });
 });
 

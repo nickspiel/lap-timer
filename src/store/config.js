@@ -10,6 +10,11 @@ const socket = new WebSocket('ws://localhost:8080');
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(
   rootReducer,
+  {
+    ui: {
+      error: {},
+    },
+  },
   composeEnhancers(applyMiddleware(thunk, socketMiddleware(socket))),
 );
 

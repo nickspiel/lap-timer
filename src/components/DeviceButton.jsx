@@ -3,14 +3,17 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { connectDevice } from '../store/creators';
 
-const Main = ({ name, address, channel, connectDeviceAction }) => (
-  <button onClick={() => connectDeviceAction(address, channel)}>{name} - {channel}</button>
+const Main = ({ name, address, connectDeviceAction }) => (
+  <button onClick={() => connectDeviceAction(address)}>{name}</button>
 );
 
-Main.propTypes = {
+export const mainPropTypes = {
   name: PropTypes.string.isRequired,
   address: PropTypes.string.isRequired,
-  channel: PropTypes.number.isRequired,
+};
+
+Main.propTypes = {
+  ...mainPropTypes,
   connectDeviceAction: PropTypes.func.isRequired,
 };
 
