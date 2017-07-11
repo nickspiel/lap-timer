@@ -2,9 +2,10 @@ import * as constants from '../../constants';
 
 const reducer = (state = {}, action) => {
   switch (action.type) {
-    case constants.DISPLAY_ERROR:
+    case constants.SET_ERROR:
       return {
         ...state,
+        loading: false,
         error: {
           message: action.data,
           show: true,
@@ -18,10 +19,16 @@ const reducer = (state = {}, action) => {
           show: false,
         },
       };
-    case constants.DEVICE_CONNECTED:
+    case constants.REQUEST_CONNECT_DEVICE:
+      return {
+        ...state,
+        loading: true,
+      };
+    case constants.SET_DEVICE_CONNECTED:
       return {
         ...state,
         deviceConnected: true,
+        loading: false,
       };
     default:
       return state;

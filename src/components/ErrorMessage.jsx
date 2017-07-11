@@ -1,12 +1,38 @@
 import React from 'react';
+import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { dismissError } from '../store/creators';
+import { dismissError } from '../store/actionCreators';
+import { slideUp } from './Elements';
+
+const Wrapper = styled.div`
+  display: ${props => (props.show ? 'block' : 'none')};
+  position: fixed;
+  bottom: 0;
+  width: 100vw;
+  background-color: ${props => props.theme.red};
+  color: white;
+  padding: 1rem;
+  font-size: 1rem;
+  animation: 0.3s ${slideUp};
+`;
+
+const Message = styled.p`
+  margin: 0;
+`;
+
+const DismissButton = styled.button`
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  color: inherit;
+`;
 
 const ErrorMessage = ({ message, show, dismiss }) => (
-  show
-  ? <p>{message}<button onClick={dismiss}>Dismiss</button></p>
-  : null
+  <Wrapper show={show}>
+    <DismissButton onClick={dismiss}>Dismiss</DismissButton>
+    <Message>{message}</Message>
+  </Wrapper>
 );
 
 ErrorMessage.defaultProps = {

@@ -1,37 +1,76 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { getDeviceList } from '../store/creators';
-import DeviceButton, { mainPropTypes } from './DeviceButton';
+import styled from 'styled-components';
+import {
+  requestStartRace,
+} from '../store/requestCreators';
+import { SubHeading } from './SubHeading';
 import ErrorMessage from './ErrorMessage';
-import translateIncomming from '../store/translation';
+import Button from './Button';
+import Configuration from './Configuration';
+import RacerConfiguration from './RacerConfiguration';
+import { Loader } from './Elements';
 
-const Main = ({ devices, getDeviceListAction }) => (
-  <main>
-    {translateIncomming('test')}
+const Wrapper = styled.main`
+  position: relative;
+  height: 100%;
+  padding: 1rem;
+  display: grid;
+  grid-gap: 1rem;
+  grid-template-columns: 20rem 2fr;
+  grid-template-rows: auto;
+  grid-template-areas:
+    "configuration race"
+    "racers race"
+    "racers history";
+  align-content: stretch;
+`;
+
+const GridCell = styled.div`
+  background-color: white;
+  padding: 1rem;
+  box-shadow: ${props => props.theme.shadow};
+  grid-area: ${props => props.gridArea};
+`;
+
+const Main = ({
+  startRace,
+  loading,
+}) => (
+  <Wrapper>
+    <Loader show={loading} />
     <ErrorMessage />
-    <button onClick={getDeviceListAction}>Connect</button>
-    <div>
-      {devices.map(device => (
-        <DeviceButton key={device.address} {...device} />
-      ))}
-    </div>
-  </main>
+    <GridCell gridArea="configuration">
+      <Configuration />
+    </GridCell>
+    <GridCell gridArea="race">
+      <SubHeading>Race</SubHeading>
+      <Button onClick={startRace}>Start Race</Button>
+    </GridCell>
+    <GridCell gridArea="racers">
+      <RacerConfiguration />
+    </GridCell>
+    <GridCell gridArea="history">
+      <SubHeading>History</SubHeading>
+    </GridCell>
+  </Wrapper>
 );
 
 Main.defaultProps = {
-  devices: [],
+  loading: false,
 };
 
 Main.propTypes = {
-  devices: PropTypes.arrayOf(PropTypes.shape(mainPropTypes)),
-  getDeviceListAction: PropTypes.func.isRequired,
+  startRace: PropTypes.func.isRequired,
+  loading: PropTypes.bool,
 };
 
 export default connect(
   state => ({
-    devices: state.devices,
-    messages: state.messages,
+    loading: state.ui.loading,
   }),
-  { getDeviceListAction: getDeviceList },
+  {
+    startRace: requestStartRace,
+  },
 )(Main);

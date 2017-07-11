@@ -1,23 +1,53 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { connectDevice } from '../store/creators';
+import styled from 'styled-components';
+import { requestConnectDevice } from '../store/requestCreators';
 
-const Main = ({ name, address, connectDeviceAction }) => (
-  <button onClick={() => connectDeviceAction(address)}>{name}</button>
+const Wrapper = styled.button`
+  border: none;
+  background: transparent;
+  width: 100%;
+  text-align: left;
+  font-size: 0.85rem;
+  cursor: pointer;
+  outline: none;
+  padding: 0.5rem 0;
+  &:not(:last-child) {
+    border-bottom: solid 1px ${props => props.theme.lightGrey};
+  }
+`;
+
+const Name = styled.p`
+  margin-top: 0;
+  margin-bottom: 0.25rem;
+  color: ${props => props.theme.green};
+`;
+
+const Address = styled.p`
+  margin-bottom: 0;
+  padding-bottom: 0.5rem;
+  color: ${props => props.theme.grey};
+`;
+
+const DeviceButton = ({ name, address, requestConnectDeviceAction }) => (
+  <Wrapper type="transparent" onClick={() => requestConnectDeviceAction(address)}>
+    <Name>{name}</Name>
+    <Address>{address}</Address>
+  </Wrapper>
 );
 
-export const mainPropTypes = {
+export const deviceButtonPropTypes = {
   name: PropTypes.string.isRequired,
   address: PropTypes.string.isRequired,
 };
 
-Main.propTypes = {
-  ...mainPropTypes,
-  connectDeviceAction: PropTypes.func.isRequired,
+DeviceButton.propTypes = {
+  ...deviceButtonPropTypes,
+  requestConnectDeviceAction: PropTypes.func.isRequired,
 };
 
 export default connect(
   null,
-  { connectDeviceAction: connectDevice },
-)(Main);
+  { requestConnectDeviceAction: requestConnectDevice },
+)(DeviceButton);

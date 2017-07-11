@@ -11,6 +11,10 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(
   rootReducer,
   {
+    devices: [],
+    race: {
+      laps: 1,
+    },
     ui: {
       error: {},
     },
@@ -20,6 +24,7 @@ const store = createStore(
 
 // Dispatch all socket messages to the store
 socket.onmessage = (event) => {
+  console.log(JSON.parse(event.data));
   store.dispatch(JSON.parse(event.data));
 };
 
