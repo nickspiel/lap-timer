@@ -37,7 +37,7 @@ const Configuration = ({
             ready={deviceConnected}
             decrement={decreaseLaps}
             increment={increaseLaps}
-            value={laps.toString()}
+            value={laps}
           />
         </InputGroup>
         <InputGroup>

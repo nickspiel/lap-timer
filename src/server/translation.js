@@ -11,7 +11,7 @@ import {
   setRSSIValue,
   setSkipFirstLap,
   setLapTime,
-} from './actionCreators';
+} from '../store/actionCreators';
 import * as constants from '../constants';
 
 const translateIncomming = (buffer, sendMessage) => {

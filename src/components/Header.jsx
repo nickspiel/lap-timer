@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import fastClock from '../assets/icons/clock-fast.svg';
 
 const Wrapper = styled.header`
   background-color: ${props => props.theme.darkBlue};
@@ -15,11 +16,18 @@ const Heading = styled.h1`
   font-weight: 200;
   text-transform: uppercase;
   letter-spacing: 0.25em;
+  display: flex;
+  align-items: center;
+`;
+
+const Logo = styled.img`
+  margin-right: 1rem;
+  width: 2rem;
 `;
 
 const Header = ({ name }) => (
   <Wrapper>
-    <Heading>{name}</Heading>
+    <Heading><Logo src={fastClock} alt="" /><span>{name}</span></Heading>
   </Wrapper>
 );
 

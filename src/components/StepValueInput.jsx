@@ -24,7 +24,10 @@ const SetValueInput = ({ increment, decrement, value, ready }) => (
 SetValueInput.propTypes = {
   increment: PropTypes.func.isRequired,
   decrement: PropTypes.func.isRequired,
-  value: PropTypes.string.isRequired,
+  value: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ]).isRequired,
   ready: PropTypes.bool.isRequired,
 };
 

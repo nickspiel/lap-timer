@@ -1,7 +1,6 @@
 import * as constants from '../../constants';
 
 const reducer = (state = {}, action) => {
-  console.log(action);
   switch (action.type) {
     case constants.SET_NUMBER_OF_RACERS:
       return ({
@@ -21,7 +20,7 @@ const reducer = (state = {}, action) => {
     case constants.DECREASE_LAPS:
       return ({
         ...state,
-        laps: state.laps !== 0 ? state.laps - 1 : 0,
+        laps: state.laps !== 1 ? state.laps - 1 : 1,
       });
     default:
       return state;

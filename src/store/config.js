@@ -16,6 +16,7 @@ const store = createStore(
       laps: 1,
     },
     ui: {
+      deviceConnected: false,
       error: {},
     },
   },

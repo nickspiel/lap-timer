@@ -19,8 +19,9 @@ let messageFragments = '';
 
 export const translateIncomming = (sendMessage, buffer) => {
   const message = buffer.toString('utf-8').trim();
-  // Match uppercase letters in response
-  const matches = message.match(/(S)[0-9]([A-Z])[0-9]/);
+
+  // Match message format in response
+  const matches = message.match(/(S)[0-9]([A-Za-z)[0-9])/);
 
   let code;
 
@@ -58,14 +59,17 @@ export const collectMessages = (sendMessage, buffer) => {
   messageFragments += bufferString;
 
   // Find whole matches (letters and numbers preeceed newline character)
-  const messages = messageFragments.match(/([A-Za-z0-9]*)(?=\n)/g);
+  const messages = messageFragments.match(/([A-Z].*)(?=\n)/g);
+  console.log(messages);
+  if (messages) {
+    // Loop over each whole match
+    messages.forEach((message) => {
+      // Remove the matched message from the fragments
+      const messageMatch = RegExp(`${message}\n`, 'g');
+      messageFragments = messageFragments.replace(messageMatch, '');
 
-  // Loop over each whole match
-  messages.forEach((message) => {
-    // Remove the matched message from the fragments
-    messageFragments.replace(`${message}\n`, '');
-
-    // Translate and send the message
-    sendMessage(translateIncomming(sendMessage, message));
-  });
+      // Translate and send the message
+      sendMessage(translateIncomming(sendMessage, message));
+    });
+  }
 };

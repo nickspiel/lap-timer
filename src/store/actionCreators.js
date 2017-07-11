@@ -35,14 +35,14 @@ export const setNumberOfRacers = data => ({
 });
 
 export const setRaceStatus = (data) => {
-  const status = data.slice(-1);
+  const status = data.match(/\d+$/)[0];
   return ({
     type: constants.SET_RACE_STATUS,
     status,
   });
 };
 
-export const setMinimumLapTime = data => parseInt(data.slice(-1), 16);
+export const setMinimumLapTime = data => parseInt(data, 16).match(/M([0-9]*)/)[1];
 
 export const setBand = data => ({
   type: constants.SET_BAND,
