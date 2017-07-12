@@ -40,15 +40,11 @@ const requestDeviceList = () => {
 };
 
 const getDeviceDetails = () => {
-  const buffer = new Buffer('N0\n', 'utf8');
-  BTserial.write(buffer, (err, bytesWritten) => {
-    if (err) {
-      console.log(err);
-    }
-    if (bytesWritten === buffer.length) {
-      console.log('All bytes sent');
-    }
-  });
+  const NumberOFRacersBuffer = new Buffer('N0\n', 'utf8');
+  BTserial.write(NumberOFRacersBuffer, () => {});
+
+  const bulkStateBuffer = new Buffer('R0A\n', 'utf8');
+  BTserial.write(bulkStateBuffer, () => {});
 };
 
 const writeData = (code) => {

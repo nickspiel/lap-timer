@@ -42,8 +42,6 @@ export const setRaceStatus = (data) => {
   });
 };
 
-export const setMinimumLapTime = data => parseInt(data, 16).match(/M([0-9]*)/)[1];
-
 export const setBand = data => ({
   type: constants.SET_BAND,
   band: data,
@@ -91,3 +89,13 @@ export const setLapTime = data => ({
   type: constants.SET_LAP_TIME,
   time: data,
 });
+
+export const updateRacerNameAction = (id, name) => {
+  console.log(id);
+  console.log(name);
+  return ({
+    type: constants.UPDATE_RACER_NAME,
+    name,
+    id,
+  });
+};

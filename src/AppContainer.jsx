@@ -49,8 +49,8 @@ const theme = {
   darkBlue: '#2D3E4F',
   green: '#0FC3AA',
   grey: 'darkgrey',
-  red: '#FF5C5C',
   lightGrey: 'whitesmoke',
+  red: '#FF5C5C',
   shadow: '0 2px 5px 0 rgba(0, 0, 0, 0.125)',
 };
 

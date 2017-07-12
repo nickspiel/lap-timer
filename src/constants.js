@@ -5,6 +5,7 @@ export const DISMISS_ERROR = 'DISMISS_ERROR';
 export const SET_LOADING = 'SET_LOADING';
 export const INCREASE_LAPS = 'INCREASE_LAPS';
 export const DECREASE_LAPS = 'DECREASE_LAPS';
+export const UPDATE_RACER_NAME = 'UPDATE_RACER_NAME';
 
 // Bluetooth requests
 export const REQUEST_DEVICE_LIST = 'REQUEST_DEVICE_LIST';

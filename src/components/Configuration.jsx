@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { SubHeading } from './SubHeading';
 import DeviceButton, { deviceButtonPropTypes } from './DeviceButton';
 import StepValueInput from './StepValueInput';
 import {
@@ -12,7 +11,7 @@ import {
   requestDecreaseLaps,
   requestIncreaseLaps,
 } from '../store/actionCreators';
-import { Label, InputGroup } from './Elements';
+import { Label, InputGroup, SubHeading, GridCell, GridContent } from './Elements';
 
 const Configuration = ({
   decreaseLaps,
@@ -24,34 +23,37 @@ const Configuration = ({
   minLapTime,
   laps,
 }) => (
-  <div>
+  <GridCell gridArea="configuration">
     <SubHeading>Configuration</SubHeading>
-    {!deviceConnected ?
-      devices.map(device => (
-        <DeviceButton key={device.address} {...device} />
-      )) :
-      <div>
-        <InputGroup>
-          <Label>Laps</Label>
-          <StepValueInput
-            ready={deviceConnected}
-            decrement={decreaseLaps}
-            increment={increaseLaps}
-            value={laps}
-          />
-        </InputGroup>
-        <InputGroup>
-          <Label>Minimum Lap Time</Label>
-          <StepValueInput
-            ready={deviceConnected}
-            decrement={decreaseMinimumLapTime}
-            increment={increaseMinimumLapTime}
-            value={minLapTime}
-          />
-        </InputGroup>
-      </div>
-    }
-  </div>
+    <GridContent>
+      {!deviceConnected ?
+        devices.map(device => (
+          <DeviceButton key={device.address} {...device} />
+        ))
+      :
+        <div>
+          <InputGroup>
+            <Label>Laps</Label>
+            <StepValueInput
+              ready={deviceConnected}
+              decrement={decreaseLaps}
+              increment={increaseLaps}
+              value={laps}
+            />
+          </InputGroup>
+          <InputGroup>
+            <Label>Minimum Lap Time</Label>
+            <StepValueInput
+              ready={deviceConnected}
+              decrement={decreaseMinimumLapTime}
+              increment={increaseMinimumLapTime}
+              value={minLapTime}
+            />
+          </InputGroup>
+        </div>
+      }
+    </GridContent>
+  </GridCell>
 );
 
 Configuration.defaultProps = {
@@ -64,7 +66,10 @@ Configuration.defaultProps = {
 Configuration.propTypes = {
   deviceConnected: PropTypes.bool,
   devices: PropTypes.arrayOf(PropTypes.shape(deviceButtonPropTypes)),
-  minLapTime: PropTypes.string,
+  minLapTime: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ]),
   laps: PropTypes.number,
   decreaseLaps: PropTypes.func.isRequired,
   increaseLaps: PropTypes.func.isRequired,

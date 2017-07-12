@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { SubHeading } from './SubHeading';
-import StepValueInput from './StepValueInput';
+import styled from 'styled-components';
+import Icon from './Icon';
+import RacerDetails from './RacerDetails';
 import {
   requestPreviousBand,
   requestNextBand,
@@ -10,46 +11,37 @@ import {
   requestPreviousChannel,
 } from '../store/requestCreators';
 import {
-  Label,
-  InputGroup,
   StateMessage,
+  SubHeading,
+  GridCell,
+  GridContent,
 } from './Elements';
+
+const NoConnectionIcon = styled(Icon)`
+  width: 2rem;
+  height: 2rem;
+  fill: ${props => props.theme.grey};
+`;
 
 const Configuration = ({
   racers,
   deviceConnected,
-  decrementBand,
-  incrementBand,
-  decrementChannel,
-  incrementChannel,
 }) => (
-  <div>
-    <SubHeading>Racers</SubHeading>
-    {!deviceConnected ? <StateMessage>Device not connected</StateMessage> :
-    racers.map(racer => (
-      <div key={racer.id} {...racer}>
-        <InputGroup>
-          <Label>Band</Label>
-          <StepValueInput
-            ready={deviceConnected}
-            decrement={decrementBand}
-            increment={incrementBand}
-            value={''}
-          />
-        </InputGroup>
-        <InputGroup>
-          <Label>Channel</Label>
-          <StepValueInput
-            ready={deviceConnected}
-            decrement={decrementChannel}
-            increment={incrementChannel}
-            value={''}
-          />
-        </InputGroup>
-      </div>
-    ))
-    }
-  </div>
+  <GridCell gridArea="racers">
+    <SubHeading>Racers {racers.length}</SubHeading>
+    <GridContent>
+      {!deviceConnected ?
+        <StateMessage>
+          <NoConnectionIcon icon="bluetoothOff" />
+          <p>Device not connected</p>
+        </StateMessage>
+      :
+        racers.map(racer => (
+          <RacerDetails key={racer.id} {...racer} />
+        ))
+      }
+    </GridContent>
+  </GridCell>
 );
 
 Configuration.defaultProps = {
@@ -59,22 +51,12 @@ Configuration.defaultProps = {
 
 Configuration.propTypes = {
   deviceConnected: PropTypes.bool,
-  decrementBand: PropTypes.func.isRequired,
-  incrementBand: PropTypes.func.isRequired,
-  decrementChannel: PropTypes.func.isRequired,
-  incrementChannel: PropTypes.func.isRequired,
   racers: PropTypes.array,
 };
 
 export default connect(
   state => ({
-    racers: state.ui.racers,
+    racers: state.race.racers,
     deviceConnected: state.ui.deviceConnected,
   }),
-  {
-    decrementBand: requestPreviousBand,
-    incrementBand: requestNextBand,
-    decrementChannel: requestPreviousChannel,
-    incrementChannel: requestNextChannel,
-  },
 )(Configuration);

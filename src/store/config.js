@@ -13,10 +13,19 @@ const store = createStore(
   {
     devices: [],
     race: {
-      laps: 1,
+      laps: 5,
+      racers: [
+        {
+          id: 1, // TODO remove
+        },
+        {
+          id: 2, // TODO remove
+        },
+      ],
     },
     ui: {
-      deviceConnected: false,
+      loading: true,
+      deviceConnected: true, // TODO make false
       error: {},
     },
   },

@@ -1,7 +1,5 @@
 import {
-  setNumberOfRacers,
   setRaceStatus,
-  setMinimumLapTime,
   setBand,
   setChannel,
   setThreshold,
@@ -21,7 +19,7 @@ export const translateIncomming = (sendMessage, buffer) => {
   const message = buffer.toString('utf-8').trim();
 
   // Match message format in response
-  const matches = message.match(/(S)[0-9]([A-Za-z)[0-9])/);
+  const matches = message.match(/([SN])[0-9]?([A-Za-z0-9])/);
 
   let code;
 
@@ -29,24 +27,40 @@ export const translateIncomming = (sendMessage, buffer) => {
     // Remove the full match if a match is made
     matches.shift();
 
-    // Join the matched pattern
-    code = matches.join('');
+    // Join the matched pattern and strip numbers
+    code = matches.join('').replace(/\d+/g, '');
   }
 
   const actions = {
-    N: () => setNumberOfRacers(),
+    N: () => ({
+      type: constants.SET_NUMBER_OF_RACERS,
+      value: parseInt(message.match(/N([A-Za-z0-9]*)/)[1], 16),
+    }),
     SR: () => setRaceStatus(message),
-    SM: () => sendMessage(constants.SET_MINIMUM_LAP_TIME, setMinimumLapTime(message)),
+    SM: () => ({
+      type: constants.SET_MINIMUM_LAP_TIME,
+      value: parseInt(message.match(/M([A-Za-z0-9]*)/)[1], 16),
+    }),
     SB: () => setBand(),
     SC: () => setChannel(message),
     ST: () => setThreshold(),
     SD: () => setSoundStatus(),
-    SI: () => setCalibratrion(),
+    SI: () => ({
+      type: constants.SET_CALIBRATION_ENDED,
+      value: parseInt(message.match(/I([A-Za-z0-9]*)/)[1], 16),
+    }),
+    Si: () => ({
+      type: constants.SET_CALIBRATION_STATE,
+      value: parseInt(message.match(/i([A-Za-z0-9]*)/)[1], 16),
+    }),
     SV: () => setRSSIStatus(),
     SF: () => setSkipFirstLap(),
     SS: () => setRSSIValue(),
     SL: () => setLapTime(),
-    default: () => sendMessage(constants.SET_ERROR, `No action match found for ${message}`),
+    default: () => ({
+      type: constants.SET_ERROR,
+      value: `No action match found for ${message}`,
+    }),
   };
 
   return (actions[code] || actions.default)();
@@ -60,7 +74,7 @@ export const collectMessages = (sendMessage, buffer) => {
 
   // Find whole matches (letters and numbers preeceed newline character)
   const messages = messageFragments.match(/([A-Z].*)(?=\n)/g);
-  console.log(messages);
+
   if (messages) {
     // Loop over each whole match
     messages.forEach((message) => {
@@ -68,8 +82,11 @@ export const collectMessages = (sendMessage, buffer) => {
       const messageMatch = RegExp(`${message}\n`, 'g');
       messageFragments = messageFragments.replace(messageMatch, '');
 
-      // Translate and send the message
-      sendMessage(translateIncomming(sendMessage, message));
+      // Translate the message to an action
+      const { type, value } = translateIncomming(sendMessage, message);
+
+      // Send the message
+      sendMessage(type, value);
     });
   }
 };

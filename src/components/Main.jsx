@@ -5,12 +5,11 @@ import styled from 'styled-components';
 import {
   requestStartRace,
 } from '../store/requestCreators';
-import { SubHeading } from './SubHeading';
 import ErrorMessage from './ErrorMessage';
-import Button from './Button';
 import Configuration from './Configuration';
 import RacerConfiguration from './RacerConfiguration';
-import { Loader } from './Elements';
+import RaceDetails from './RaceDetails';
+import { Loader, SubHeading } from './Elements';
 
 const Wrapper = styled.main`
   position: relative;
@@ -27,33 +26,15 @@ const Wrapper = styled.main`
   align-content: stretch;
 `;
 
-const GridCell = styled.div`
-  background-color: white;
-  padding: 1rem;
-  box-shadow: ${props => props.theme.shadow};
-  grid-area: ${props => props.gridArea};
-`;
-
 const Main = ({
-  startRace,
   loading,
 }) => (
   <Wrapper>
     <Loader show={loading} />
     <ErrorMessage />
-    <GridCell gridArea="configuration">
-      <Configuration />
-    </GridCell>
-    <GridCell gridArea="race">
-      <SubHeading>Race</SubHeading>
-      <Button onClick={startRace}>Start Race</Button>
-    </GridCell>
-    <GridCell gridArea="racers">
-      <RacerConfiguration />
-    </GridCell>
-    <GridCell gridArea="history">
-      <SubHeading>History</SubHeading>
-    </GridCell>
+    <Configuration />
+    <RaceDetails />
+    <RacerConfiguration />
   </Wrapper>
 );
 
@@ -62,7 +43,6 @@ Main.defaultProps = {
 };
 
 Main.propTypes = {
-  startRace: PropTypes.func.isRequired,
   loading: PropTypes.bool,
 };
 
@@ -70,7 +50,4 @@ export default connect(
   state => ({
     loading: state.ui.loading,
   }),
-  {
-    startRace: requestStartRace,
-  },
 )(Main);

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import fastClock from '../assets/icons/clock-fast.svg';
+import Icon from './Icon';
 
 const Wrapper = styled.header`
   background-color: ${props => props.theme.darkBlue};
@@ -20,14 +20,16 @@ const Heading = styled.h1`
   align-items: center;
 `;
 
-const Logo = styled.img`
+const Logo = styled(Icon)`
   margin-right: 1rem;
   width: 2rem;
+  height: 2rem;
+  fill: white;
 `;
 
 const Header = ({ name }) => (
   <Wrapper>
-    <Heading><Logo src={fastClock} alt="" /><span>{name}</span></Heading>
+    <Heading><Logo icon="vector" /><span>{name}</span></Heading>
   </Wrapper>
 );
 

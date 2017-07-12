@@ -2,6 +2,11 @@ import * as constants from '../../constants';
 
 const reducer = (state = {}, action) => {
   switch (action.type) {
+    case constants.SET_DEVICES:
+      return {
+        ...state,
+        loading: false,
+      };
     case constants.SET_ERROR:
       return {
         ...state,
