@@ -8,20 +8,11 @@ const reducer = (state = {}, action) => {
         racers: [...Array(action.data).keys()].map(number => ({ id: number + 1 })),
       });
     case constants.UPDATE_RACER_NAME:
-    console.log(action.id);
-    console.log(state.racers);
-    console.log(state.racers.splice(0, action.id - 1));
-    console.log(state.racers.splice(action.id - 1, 0));
       return ({
         ...state,
-        racers: [
-          ...state.racers.splice(0, action.id - 1),
-          {
-            ...state.racers[action.id - 1],
-            name: action.name,
-          },
-          ...state.racers.splice(action.id, 0),
-        ],
+        racers: state.racers.map(racer => (
+          racer.id === action.id ? { ...racer, name: action.name } : racer
+        )),
       });
     case constants.SET_MINIMUM_LAP_TIME:
       return ({

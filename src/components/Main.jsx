@@ -2,14 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
-import {
-  requestStartRace,
-} from '../store/requestCreators';
 import ErrorMessage from './ErrorMessage';
 import Configuration from './Configuration';
 import RacerConfiguration from './RacerConfiguration';
 import RaceDetails from './RaceDetails';
-import { Loader, SubHeading } from './Elements';
+import { Loader } from './Elements';
 
 const Wrapper = styled.main`
   position: relative;

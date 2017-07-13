@@ -15,7 +15,7 @@ import { updateRacerNameAction } from '../store/actionCreators';
 // const enhance = withState('name', 'setName', '');
 
 const RacerDetails = ({
-  // setName,
+  name,
   id,
   deviceConnected,
   decrementBand,
@@ -27,7 +27,7 @@ const RacerDetails = ({
   <div>
     <InputGroup>
       <Label>Name</Label>
-      <TextInput type="text" value="sdas" onChange={event => updateRacerName(id, event.currentTarget.value)} />
+      <TextInput type="text" value={name} onChange={event => updateRacerName(id, event.currentTarget.value)} />
     </InputGroup>
     <InputGroup>
       <Label>Band</Label>
@@ -50,8 +50,13 @@ const RacerDetails = ({
   </div>
 );
 
+RacerDetails.defaultProps = {
+  name: '',
+};
+
 RacerDetails.propTypes = {
   id: PropTypes.number.isRequired,
+  name: PropTypes.string,
   deviceConnected: PropTypes.bool.isRequired,
   decrementBand: PropTypes.func.isRequired,
   incrementBand: PropTypes.func.isRequired,

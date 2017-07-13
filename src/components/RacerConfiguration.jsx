@@ -5,12 +5,6 @@ import styled from 'styled-components';
 import Icon from './Icon';
 import RacerDetails from './RacerDetails';
 import {
-  requestPreviousBand,
-  requestNextBand,
-  requestNextChannel,
-  requestPreviousChannel,
-} from '../store/requestCreators';
-import {
   StateMessage,
   SubHeading,
   GridCell,
