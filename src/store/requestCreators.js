@@ -66,12 +66,14 @@ export const requestEndCalibration = () => ({
   type: constants.REQUEST_END_CALIBRATION,
 });
 
-export const requestRssiMonitorOn = () => ({
+export const requestRssiMonitorOn = id => ({
   type: constants.REQUEST_RSSI_MONITOR_ON,
+  id,
 });
 
-export const requestRssiMonitorOff = () => ({
+export const requestRssiMonitorOff = id => ({
   type: constants.REQUEST_RSSI_MONITOR_OFF,
+  id,
 });
 
 export const requestToggleFirstLap = () => ({

@@ -42,6 +42,16 @@ const reducer = (state = {}, action) => {
         ? action.index
         : state.activeRacer,
       };
+    case constants.SET_RSSI_STATUS:
+      return {
+        ...state,
+        rssiMonitoring: action.data === 1,
+      };
+    case constants.SET_RSSI_VALUE:
+      return {
+        ...state,
+        rssiValue: action.data,
+      };
     default:
       return state;
   }

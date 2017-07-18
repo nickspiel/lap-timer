@@ -41,6 +41,15 @@ const reducer = (state = {}, action) => {
           : { ...racer }
         )),
       });
+    case constants.SET_CHANNEL:
+      return ({
+        ...state,
+        racers: state.racers.map(racer => (
+          racer.id === activeRacer()
+          ? { ...racer, channel: action.data }
+          : { ...racer }
+        )),
+      });
     default:
       return state;
   }

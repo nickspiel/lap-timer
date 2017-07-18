@@ -1,10 +1,7 @@
 import {
-  setRaceStatus,
-  setChannel,
   setThreshold,
   setSoundStatus,
   setRSSIStatus,
-  setRSSIValue,
   setSkipFirstLap,
   setLapTime,
 } from '../store/actionCreators';
@@ -22,6 +19,7 @@ export const translateIncomming = (sendMessage, buffer) => {
   let code;
 
   if (matches) {
+    console.log(matches);
     // Remove the full match if a match is made
     matches.shift();
 
@@ -60,9 +58,15 @@ export const translateIncomming = (sendMessage, buffer) => {
       type: constants.SET_CALIBRATION_STATE,
       value: parseInt(message.match(/i([A-Za-z0-9]*)/)[1], 16),
     }),
-    SV: () => setRSSIStatus(),
+    SV: () => ({
+      type: constants.SET_RSSI_STATUS,
+      value: parseInt(message.match(/S.V([A-Za-z0-9]*)/)[1], 16),
+    }),
     SF: () => setSkipFirstLap(),
-    SS: () => setRSSIValue(),
+    SS: () => ({
+      type: constants.SET_RSSI_VALUE,
+      value: parseInt(message.match(/S.S([A-Za-z0-9]*)/)[1], 16),
+    }),
     SL: () => setLapTime(),
     default: () => ({
       type: constants.SET_ERROR,

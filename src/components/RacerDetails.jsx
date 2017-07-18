@@ -10,6 +10,8 @@ import {
   requestNextBand,
   requestPreviousChannel,
   requestNextChannel,
+  requestRssiMonitorOn,
+  requestRssiMonitorOff,
 } from '../store/requestCreators';
 import {
   updateRacerNameAction,
@@ -43,6 +45,10 @@ const RacerDetails = ({
   decrementChannel,
   incrementChannel,
   updateRacerName,
+  rssiMonitorOn,
+  rssiMonitorOff,
+  rssiMonitoring,
+  rssiValue,
 }) => (
   <div>
     <InputGroup>
@@ -69,9 +75,12 @@ const RacerDetails = ({
     </InputGroup>
     <InputGroup>
       <Label>RSSI Threshold</Label>
-      <span>150</span>
-      <FillBar value={150} />
-      <Button onClick={() => {}}>Read</Button>
+      <span>{rssiValue}</span>
+      <FillBar value={rssiValue} />
+      {rssiMonitoring
+        ? <Button onClick={() => rssiMonitorOff(id)}>Stop</Button>
+        : <Button onClick={() => rssiMonitorOn(id)}>Read</Button>
+      }
       <Button onClick={() => {}}>Set</Button>
     </InputGroup>
   </div>
@@ -81,6 +90,8 @@ RacerDetails.defaultProps = {
   name: '',
   band: 0,
   channel: 0,
+  rssiMonitoring: false,
+  rssiValue: 0,
 };
 
 RacerDetails.propTypes = {
@@ -94,16 +105,24 @@ RacerDetails.propTypes = {
   decrementChannel: PropTypes.func.isRequired,
   incrementChannel: PropTypes.func.isRequired,
   updateRacerName: PropTypes.func.isRequired,
+  rssiMonitorOn: PropTypes.func.isRequired,
+  rssiMonitorOff: PropTypes.func.isRequired,
+  rssiMonitoring: PropTypes.bool,
+  rssiValue: PropTypes.number,
 };
 
 export default connect(
   state => ({
     deviceConnected: state.ui.deviceConnected,
+    rssiMonitoring: state.ui.rssiMonitoring,
+    rssiValue: state.ui.rssiValue,
   }), {
     decrementBand: requestPreviousBand,
     incrementBand: requestNextBand,
     decrementChannel: requestPreviousChannel,
     incrementChannel: requestNextChannel,
     updateRacerName: updateRacerNameAction,
+    rssiMonitorOn: requestRssiMonitorOn,
+    rssiMonitorOff: requestRssiMonitorOff,
   },
 )(RacerDetails);

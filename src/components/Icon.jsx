@@ -1,5 +1,10 @@
 import React from 'react';
+import styled from 'styled-components';
 import PropTypes from 'prop-types';
+
+const Wrapper = styled.svg`
+  fill: ${props => props.theme.grey};
+`;
 
 const Icon = ({ className, icon }) => {
   const paths = {
@@ -15,9 +20,9 @@ const Icon = ({ className, icon }) => {
   };
 
   return (
-    <svg className={className} viewBox="0 0 24 24">
+    <Wrapper className={className} viewBox="0 0 24 24">
       {paths[icon] || paths.default}
-    </svg>
+    </Wrapper>
   );
 };
 
