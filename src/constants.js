@@ -36,7 +36,6 @@ export const SET_NUMBER_OF_RACERS = 'SET_NUMBER_OF_RACERS';
 export const SET_RACE_STATUS = 'SET_RACE_STATUS';
 export const SET_MINIMUM_LAP_TIME = 'SET_MINIMUM_LAP_TIME';
 export const SET_BAND = 'SET_BAND';
-export const APPLY_BAND = 'APPLY_BAND';
 export const SET_CHANNEL = 'SET_CHANNEL';
 export const SET_THRESHOLD = 'SET_THRESHOLD';
 export const SET_SOUNDS = 'SET_SOUNDS';

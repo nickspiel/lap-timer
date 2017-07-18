@@ -1,11 +1,14 @@
 import * as constants from '../../constants';
+import store from '../config';
+
+const activeRacer = () => store.getState().ui.activeRacer;
 
 const reducer = (state = {}, action) => {
   switch (action.type) {
     case constants.SET_NUMBER_OF_RACERS:
       return ({
         ...state,
-        racers: [...Array(action.data).keys()].map(number => ({ id: number + 1 })),
+        racers: [...Array(action.data).keys()].map(number => ({ id: number })),
       });
     case constants.UPDATE_RACER_NAME:
       return ({
@@ -29,12 +32,12 @@ const reducer = (state = {}, action) => {
         ...state,
         laps: state.laps !== 1 ? state.laps - 1 : 1,
       });
-    case constants.APPLY_BAND:
+    case constants.SET_BAND:
       return ({
         ...state,
         racers: state.racers.map(racer => (
-          racer.id === action.activeRacer
-          ? { ...racer, band: action.band }
+          racer.id === activeRacer()
+          ? { ...racer, band: action.data }
           : { ...racer }
         )),
       });

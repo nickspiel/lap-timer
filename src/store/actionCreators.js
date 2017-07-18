@@ -45,18 +45,6 @@ export const setRaceStatus = (data, status) => ({
   status,
 });
 
-export const applyBand = (activeRacer, band) => ({
-  type: constants.APPLY_BAND,
-  band,
-  activeRacer,
-});
-
-export const setBand = (band) => { // eslint-disable-line arrow-body-style
-  return (dispatch, getState) => {
-    dispatch(applyBand(getState().ui.activeRacer, band));
-  };
-};
-
 export const setChannel = (data) => {
   const channel = data.slice(-1);
   return ({

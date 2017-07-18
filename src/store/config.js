@@ -16,18 +16,20 @@ const store = createStore(
       laps: 5,
       racers: [
         {
-          id: 1, // TODO remove
+          id: 0, // TODO remove
+          totalTime: 2,
         },
         {
-          id: 2, // TODO remove
+          id: 1, // TODO remove
+          totalTime: 1,
         },
       ],
     },
     ui: {
       loading: true,
-      deviceConnected: true, // TODO set false
+      deviceConnected: false,
       error: {},
-      activeRacer: 1,
+      activeRacer: 0,
     },
   },
   composeEnhancers(applyMiddleware(thunk, socketMiddleware(socket))),

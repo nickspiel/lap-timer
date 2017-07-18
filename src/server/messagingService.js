@@ -91,7 +91,7 @@ export const collectMessages = (sendMessage, buffer) => {
 
       // Translate the message to an action
       const { type, value } = translateIncomming(sendMessage, message);
-
+      console.log('translateIncomming', type, value);
       // Send the message
       sendMessage(type, value);
     });

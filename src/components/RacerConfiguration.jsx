@@ -56,9 +56,9 @@ const Configuration = ({
     <SubHeading>
       Racers
       <NumberOfRacers>
-        <Button clear disabled={activeRacer <= 1} onClick={() => setActive(activeRacer - 1, racers.length)}><StepIcon icon="chevronLeft" /></Button>
-        <span>{activeRacer} / {racers.length}</span>
-        <Button clear disabled={activeRacer === racers.length} onClick={() => setActive(activeRacer + 1, racers.length)}><StepIcon icon="chevronRight" /></Button>
+        <Button clear disabled={activeRacer <= 0} onClick={() => setActive(activeRacer - 1, racers.length)}><StepIcon icon="chevronLeft" /></Button>
+        <span>{activeRacer + 1} / {racers.length}</span>
+        <Button clear disabled={activeRacer === racers.length - 1} onClick={() => setActive(activeRacer + 1, racers.length)}><StepIcon icon="chevronRight" /></Button>
       </NumberOfRacers>
     </SubHeading>
     <GridContent>
@@ -69,7 +69,7 @@ const Configuration = ({
         </StateMessage>
       :
         <RacerWrapper>
-          <RacerCarousel activeRacer={activeRacer - 1}>
+          <RacerCarousel activeRacer={activeRacer}>
             {racers.map(racer => (
               <RacerDetails key={racer.id} {...racer} />
             ))}
