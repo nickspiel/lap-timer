@@ -19,7 +19,7 @@ const Wrapper = styled.main`
   grid-template-areas:
     "configuration race"
     "racers race"
-    "racers history";
+    "racers history"; /* TODO Move to straight flexbox */
   align-content: stretch;
 `;
 
