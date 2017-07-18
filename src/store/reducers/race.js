@@ -29,6 +29,15 @@ const reducer = (state = {}, action) => {
         ...state,
         laps: state.laps !== 1 ? state.laps - 1 : 1,
       });
+    case constants.APPLY_BAND:
+      return ({
+        ...state,
+        racers: state.racers.map(racer => (
+          racer.id === action.activeRacer
+          ? { ...racer, band: action.band }
+          : { ...racer }
+        )),
+      });
     default:
       return state;
   }

@@ -7,9 +7,11 @@ const sendMessage = (socket, store, type, data = {}) => {
   }));
 };
 
+// TODO Access store directly for needed data
+
 const socketMiddleware = socket => (() => (
   store => next => (action) => {
-    const type = action.type;
+    const { type, id } = action;
     switch (type) {
       case constants.REQUEST_CONNECT_DEVICE:
         sendMessage(socket, store, type, { address: action.address });
@@ -32,7 +34,7 @@ const socketMiddleware = socket => (() => (
       case constants.REQUEST_RSSI_MONITOR_ON:
       case constants.REQUEST_RSSI_MONITOR_OFF:
       case constants.REQUEST_TOGGLE_FIRST_LAP:
-        sendMessage(socket, store, type);
+        sendMessage(socket, store, type, id);
         break;
       default:
         break;

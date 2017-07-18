@@ -22,20 +22,24 @@ export const requestDecreaseMinimumLapTime = () => ({
   type: constants.REQUEST_DECREASE_MINIMUM_LAP_TIME,
 });
 
-export const requestNextBand = () => ({
+export const requestNextBand = id => ({
   type: constants.REQUEST_NEXT_BAND,
+  id,
 });
 
-export const requestPreviousBand = () => ({
+export const requestPreviousBand = id => ({
   type: constants.REQUEST_PREVIOUS_BAND,
+  id,
 });
 
-export const requestNextChannel = () => ({
+export const requestNextChannel = id => ({
   type: constants.REQUEST_NEXT_CHANNEL,
+  id,
 });
 
-export const requestPreviousChannel = () => ({
+export const requestPreviousChannel = id => ({
   type: constants.REQUEST_PREVIOUS_CHANNEL,
+  id,
 });
 
 export const requestIncreaseThreshold = () => ({

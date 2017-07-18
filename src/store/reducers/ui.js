@@ -35,6 +35,13 @@ const reducer = (state = {}, action) => {
         deviceConnected: true,
         loading: false,
       };
+    case constants.SET_ACTIVE_RACER:
+      return {
+        ...state,
+        activeRacer: (action.index - 1 < action.totalNumber && action.index > 0)
+        ? action.index
+        : state.activeRacer,
+      };
     default:
       return state;
   }

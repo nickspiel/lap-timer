@@ -47,10 +47,10 @@ const getDeviceDetails = () => {
   BTserial.write(bulkStateBuffer, () => {});
 };
 
-const writeData = (code) => {
-  const buffer = new Buffer(`R0${code}\n`, 'utf8');
+const writeData = (code, id = 0) => {
+  const buffer = new Buffer(`R${id}${code}\n`, 'utf8');
   BTserial.write(buffer, (err) => {
-    if (err) throwError(`Could not write data for code R0${code}`);
+    if (err) throwError(`Could not write data for code R${id}${code}`);
   });
 };
 
@@ -82,7 +82,7 @@ webSocketServer.on('connection', (ws) => {
       [constants.REQUEST_END_RACE]: () => writeData(constants.REQUEST_END_RACE),
       [constants.REQUEST_INCREASE_MINIMUM_LAP_TIME]: () => writeData(constants.REQUEST_INCREASE_MINIMUM_LAP_TIME),
       [constants.REQUEST_DECREASE_MINIMUM_LAP_TIME]: () => writeData(constants.REQUEST_DECREASE_MINIMUM_LAP_TIME),
-      [constants.REQUEST_NEXT_BAND]: () => writeData(constants.REQUEST_NEXT_BAND),
+      [constants.REQUEST_NEXT_BAND]: () => writeData(constants.REQUEST_NEXT_BAND, 0),
       [constants.REQUEST_PREVIOUS_BAND]: () => writeData(constants.REQUEST_PREVIOUS_BAND),
       [constants.REQUEST_NEXT_CHANNEL]: () => writeData(constants.REQUEST_NEXT_CHANNEL),
       [constants.REQUEST_PREVIOUS_CHANNEL]: () => writeData(constants.REQUEST_PREVIOUS_CHANNEL),

@@ -33,6 +33,8 @@ export const SubHeading = styled.h2`
   border-bottom: solid 1px ${props => props.theme.lightGrey};
   text-transform: uppercase;
   letter-spacing: 0.25em;
+  display: flex;
+  justify-content: space-between;
 `;
 
 export const Label = styled.div`
@@ -81,7 +83,7 @@ export const GridContent = styled.div`
 
 export const TextInput = styled.input`
   width: 100%;
-  border: solid 1px ${props => props.theme.grey};
+  border: solid 1px ${props => props.theme.midGrey};
   padding: 0.5rem;
   margin: 0.5rem 0;
   text-transform: uppercase;

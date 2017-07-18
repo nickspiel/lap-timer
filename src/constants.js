@@ -6,6 +6,7 @@ export const SET_LOADING = 'SET_LOADING';
 export const INCREASE_LAPS = 'INCREASE_LAPS';
 export const DECREASE_LAPS = 'DECREASE_LAPS';
 export const UPDATE_RACER_NAME = 'UPDATE_RACER_NAME';
+export const SET_ACTIVE_RACER = 'SET_ACTIVE_RACER';
 
 // Bluetooth requests
 export const REQUEST_DEVICE_LIST = 'REQUEST_DEVICE_LIST';
@@ -35,6 +36,7 @@ export const SET_NUMBER_OF_RACERS = 'SET_NUMBER_OF_RACERS';
 export const SET_RACE_STATUS = 'SET_RACE_STATUS';
 export const SET_MINIMUM_LAP_TIME = 'SET_MINIMUM_LAP_TIME';
 export const SET_BAND = 'SET_BAND';
+export const APPLY_BAND = 'APPLY_BAND';
 export const SET_CHANNEL = 'SET_CHANNEL';
 export const SET_THRESHOLD = 'SET_THRESHOLD';
 export const SET_SOUNDS = 'SET_SOUNDS';

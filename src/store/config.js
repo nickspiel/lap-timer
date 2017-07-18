@@ -25,16 +25,18 @@ const store = createStore(
     },
     ui: {
       loading: true,
-      deviceConnected: true, // TODO make false
+      deviceConnected: true, // TODO set false
       error: {},
+      activeRacer: 1,
     },
   },
   composeEnhancers(applyMiddleware(thunk, socketMiddleware(socket))),
 );
 
 // Dispatch all socket messages to the store
+// TODO This is dumb, need action creators
 socket.onmessage = (event) => {
-  console.log(JSON.parse(event.data));
+  console.log('socket onmessage', JSON.parse(event.data));
   store.dispatch(JSON.parse(event.data));
 };
 

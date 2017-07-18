@@ -20,6 +20,12 @@ export const setLoading = status => ({
   status,
 });
 
+export const setActiveRacer = (index, totalNumber) => ({
+  type: constants.SET_ACTIVE_RACER,
+  index,
+  totalNumber,
+});
+
 export const requestIncreaseLaps = () => ({
   type: constants.INCREASE_LAPS,
 });
@@ -34,18 +40,22 @@ export const setNumberOfRacers = data => ({
   racers: data,
 });
 
-export const setRaceStatus = (data) => {
-  const status = data.match(/\d+$/)[0];
-  return ({
-    type: constants.SET_RACE_STATUS,
-    status,
-  });
-};
-
-export const setBand = data => ({
-  type: constants.SET_BAND,
-  band: data,
+export const setRaceStatus = (data, status) => ({
+  type: constants.SET_RACE_STATUS,
+  status,
 });
+
+export const applyBand = (activeRacer, band) => ({
+  type: constants.APPLY_BAND,
+  band,
+  activeRacer,
+});
+
+export const setBand = (band) => { // eslint-disable-line arrow-body-style
+  return (dispatch, getState) => {
+    dispatch(applyBand(getState().ui.activeRacer, band));
+  };
+};
 
 export const setChannel = (data) => {
   const channel = data.slice(-1);
@@ -90,12 +100,8 @@ export const setLapTime = data => ({
   time: data,
 });
 
-export const updateRacerNameAction = (id, name) => {
-  console.log(id);
-  console.log(name);
-  return ({
-    type: constants.UPDATE_RACER_NAME,
-    name,
-    id,
-  });
-};
+export const updateRacerNameAction = (id, name) => ({
+  type: constants.UPDATE_RACER_NAME,
+  name,
+  id,
+});

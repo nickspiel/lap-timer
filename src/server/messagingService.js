@@ -1,10 +1,8 @@
 import {
   setRaceStatus,
-  setBand,
   setChannel,
   setThreshold,
   setSoundStatus,
-  setCalibratrion,
   setRSSIStatus,
   setRSSIValue,
   setSkipFirstLap,
@@ -36,13 +34,22 @@ export const translateIncomming = (sendMessage, buffer) => {
       type: constants.SET_NUMBER_OF_RACERS,
       value: parseInt(message.match(/N([A-Za-z0-9]*)/)[1], 16),
     }),
-    SR: () => setRaceStatus(message),
+    SR: () => ({
+      type: constants.SET_RACE_STATUS,
+      value: parseInt(message.match(/R([A-Za-z0-9]*)/)[1], 16),
+    }),
     SM: () => ({
       type: constants.SET_MINIMUM_LAP_TIME,
       value: parseInt(message.match(/M([A-Za-z0-9]*)/)[1], 16),
     }),
-    SB: () => setBand(),
-    SC: () => setChannel(message),
+    SB: () => ({
+      type: constants.SET_BAND,
+      value: parseInt(message.match(/B([A-Za-z0-9]*)/)[1], 16),
+    }),
+    SC: () => ({
+      type: constants.SET_CHANNEL,
+      value: parseInt(message.match(/C([A-Za-z0-9]*)/)[1], 16),
+    }),
     ST: () => setThreshold(),
     SD: () => setSoundStatus(),
     SI: () => ({
