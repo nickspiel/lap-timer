@@ -26,8 +26,9 @@ const store = createStore(
       ],
     },
     ui: {
+      rssiValue: 125, // TODO Remove
       loading: true,
-      deviceConnected: false,
+      deviceConnected: true, // TODO remove
       error: {},
       activeRacer: 0,
     },

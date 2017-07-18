@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import Icon from './Icon';
 import { StateMessage, SubHeading, GridCell, GridContent } from './Elements';
 
-const racerColor = ['#A88BDF', '#39CCFF', '#FF5F5F', '#FF9F36'];
+const racerColor = ['#9C27B0', '#C2185B', '#303F9F', '#0097A7', '#388E3C', '#FF5722'];
 
 const NotStartedIcon = styled(Icon)`
   width: 2rem;

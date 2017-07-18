@@ -1,7 +1,5 @@
 import {
-  setThreshold,
   setSoundStatus,
-  setRSSIStatus,
   setSkipFirstLap,
   setLapTime,
 } from '../store/actionCreators';
@@ -48,7 +46,10 @@ export const translateIncomming = (sendMessage, buffer) => {
       type: constants.SET_CHANNEL,
       value: parseInt(message.match(/C([A-Za-z0-9]*)/)[1], 16),
     }),
-    ST: () => setThreshold(),
+    ST: () => ({
+      type: constants.SET_THRESHOLD,
+      value: parseInt(message.match(/T([A-Za-z0-9]*)/)[1], 16),
+    }),
     SD: () => setSoundStatus(),
     SI: () => ({
       type: constants.SET_CALIBRATION_ENDED,

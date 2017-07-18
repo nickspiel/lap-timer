@@ -50,6 +50,15 @@ const reducer = (state = {}, action) => {
           : { ...racer }
         )),
       });
+    case constants.SET_RACER_RSSI_THRESHOLD:
+      return ({
+        ...state,
+        racers: state.racers.map(racer => (
+          racer.id === action.id
+          ? { ...racer, rssiThreshold: action.value }
+          : { ...racer }
+        )),
+      });
     default:
       return state;
   }

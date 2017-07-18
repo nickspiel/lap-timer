@@ -5,7 +5,7 @@ import styled from 'styled-components';
 const Wrapper = styled.button`
   border: none;
   color: white;
-  padding: ${props => (props.clear ? '0.5rem' : '1em')};
+  padding: ${props => (props.clear ? '0' : '1em')};
   background-color: ${props => (props.clear ? 'transparent' : props.theme.green)};
   text-transform: uppercase;
   letter-spacing: 0.125rem;

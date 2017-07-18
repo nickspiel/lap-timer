@@ -78,6 +78,24 @@ export const setRSSIValue = data => ({
   value: data,
 });
 
+export const setRacerRSSIThreshold = (id, value) => (
+  (dispatch) => {
+    dispatch({
+      type: constants.SET_RACER_RSSI_THRESHOLD,
+      id,
+      value,
+    });
+    dispatch({
+      type: constants.REQUEST_RSSI_MONITOR_OFF,
+      id,
+    });
+    dispatch({
+      type: constants.REQUEST_SET_THRESHOLD,
+      id,
+    });
+  }
+);
+
 export const setSkipFirstLap = status => ({
   type: constants.SET_SKIP_FIRST_LAP,
   data: status,

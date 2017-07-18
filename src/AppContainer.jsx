@@ -47,7 +47,7 @@ injectGlobal`
 
 const theme = {
   darkBlue: '#2D3E4F',
-  green: '#0FC3AA',
+  green: '#26A69A',
   grey: 'darkgrey',
   midGrey: '#dddddd',
   lightGrey: 'whitesmoke',
