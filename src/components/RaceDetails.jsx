@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import Icon from './Icon';
 import { StateMessage, SubHeading, GridCell, GridContent } from './Elements';
+import { millisecondsToTime } from '../helpers';
 
 const racerColor = ['#9C27B0', '#C2185B', '#303F9F', '#0097A7', '#388E3C', '#FF5722'];
 
@@ -32,6 +33,10 @@ const TableCell = styled.td`
   text-transform: ${props => (props.uppercase ? 'uppercase' : 'normal')};
   border-top: solid 1px ${props => props.theme.lightGrey};
   padding: 1rem;
+`;
+
+const TimeCell = styled(TableCell)`
+  letter-spacing: 0.2em;
 `;
 
 const RacerSwatch = styled.span`
@@ -73,9 +78,9 @@ const RaceDetails = ({
               <tr key={racer.id}>
                 <TableCell><RacerSwatch id={racer.id}>{raceStarted ? position + 1 : '-' }</RacerSwatch></TableCell>
                 <TableCell uppercase alignLeft>{racer.name}</TableCell>
-                <TableCell>{raceStarted && racer.lastLapTime ? racer.lastLapTime : '-' }</TableCell>
-                <TableCell>{raceStarted && racer.bestLapTime ? racer.bestLapTime : '-' }</TableCell>
-                <TableCell>{raceStarted && racer.toalTime ? racer.toalTime : '-' }</TableCell>
+                <TimeCell>{raceStarted && racer.lastLapTime ? millisecondsToTime(racer.lastLapTime) : '-' }</TimeCell>
+                <TimeCell>{raceStarted && racer.bestLapTime ? millisecondsToTime(racer.bestLapTime) : '-' }</TimeCell>
+                <TimeCell>{raceStarted && racer.totalTime ? millisecondsToTime(racer.totalTime) : '-' }</TimeCell>
               </tr>
             ))}
           </tbody>

@@ -17,11 +17,15 @@ const store = createStore(
       racers: [
         {
           id: 0, // TODO remove
-          totalTime: 2,
+          lastLapTime: 24577,
+          bestLapTime: 23458,
+          totalTime: 104678,
         },
         {
           id: 1, // TODO remove
-          totalTime: 1,
+          lastLapTime: 26577,
+          bestLapTime: 24756,
+          totalTime: 105768,
         },
       ],
     },
