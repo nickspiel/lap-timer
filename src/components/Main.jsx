@@ -8,6 +8,7 @@ import RacerConfiguration from './RacerConfiguration';
 import RaceDetails from './RaceDetails';
 import History from './History';
 import { Loader } from './Elements';
+import speakOnPropChange from '../speakOnPropChange';
 
 const Wrapper = styled.main`
   position: relative;
@@ -64,8 +65,10 @@ Main.propTypes = {
   loading: PropTypes.bool,
 };
 
-export default connect(
-  state => ({
-    loading: state.ui.loading,
-  }),
-)(Main);
+export default
+  connect(
+    state => ({
+      loading: state.ui.loading,
+      deviceConnected: state.ui.deviceConnected,
+    }),
+  )(speakOnPropChange(Main, 'deviceConnected', true, 'connected'));
