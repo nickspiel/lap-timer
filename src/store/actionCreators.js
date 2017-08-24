@@ -1,4 +1,5 @@
 import * as constants from '../constants';
+import speakLine from '../speakLine';
 
 // UI actions
 export const setError = message => ({
@@ -96,10 +97,13 @@ export const setSkipFirstLap = status => ({
   data: status,
 });
 
-export const setLapTime = data => ({
-  type: constants.SET_LAP_TIME,
-  time: data,
-});
+// export const setLapTime = (data) => {
+//   speakLine(`lap ${data}`);
+//   return ({
+//     type: constants.SET_LAP_TIME,
+//     time: data,
+//   });
+// };
 
 export const updateRacerNameAction = (id, name) => ({
   type: constants.UPDATE_RACER_NAME,

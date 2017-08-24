@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import Icon from './Icon';
 import Button from './Button';
 import { requestStartRace, requestEndRace } from '../store/requestCreators';
+import speakLine from '../speakLine';
 import { StateMessage, SubHeading, GridCell, GridContent } from './Elements';
 import RacerTable from './RacerTable';
 import RacerList from './RacerList';
@@ -15,35 +16,45 @@ const NotStartedIcon = styled(Icon)`
   fill: ${props => props.theme.grey};
 `;
 
-const RaceDetails = ({
-  raceStarted,
-  deviceConnected,
-  startRace,
-  endRace,
-}) => (
-  <GridCell>
-    <SubHeading>
-      Race
-      {raceStarted
-        ? <Button onClick={() => endRace()}>End</Button>
-        : <Button onClick={() => startRace()}>Start</Button>
-      }
-    </SubHeading>
-    <GridContent>
-      {!deviceConnected ?
-        <StateMessage>
-          <NotStartedIcon icon="snooze" />
-          <p>Race has not started</p>
-        </StateMessage>
-      :
-        <div>
-          <RacerTable />
-          <RacerList />
-        </div>
-      }
-    </GridContent>
-  </GridCell>
-);
+class RaceDetails extends Component {
+  componentWillUpdate(nextProps) {
+    if (nextProps.raceStarted !== this.props.raceStarted) {
+      speakLine(nextProps.raceStarted ? 'race has started' : 'race has finished');
+    }
+  }
+  render() {
+    const {
+      raceStarted,
+      deviceConnected,
+      startRace,
+      endRace,
+    } = this.props;
+    return (
+      <GridCell>
+        <SubHeading>
+          Race
+          {raceStarted
+            ? <Button onClick={() => endRace()}>End</Button>
+            : <Button onClick={() => startRace()}>Start</Button>
+          }
+        </SubHeading>
+        <GridContent>
+          {!deviceConnected ?
+            <StateMessage>
+              <NotStartedIcon icon="snooze" />
+              <p>Race has not started</p>
+            </StateMessage>
+          :
+            <div>
+              <RacerTable />
+              <RacerList />
+            </div>
+          }
+        </GridContent>
+      </GridCell>
+    );
+  }
+}
 
 RaceDetails.defaultProps = {
   raceStarted: false,

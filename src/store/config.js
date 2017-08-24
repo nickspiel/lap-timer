@@ -14,6 +14,7 @@ const store = createStore(
     devices: [],
     race: {
       laps: 5,
+      raceStarted: false,
       racers: [],
     },
     ui: {
