@@ -14,27 +14,16 @@ const store = createStore(
     devices: [],
     race: {
       laps: 5,
-      racers: [
-        {
-          id: 0, // TODO remove
-          lastLapTime: 24577,
-          bestLapTime: 23458,
-          totalTime: 104678,
-        },
-        {
-          id: 1, // TODO remove
-          lastLapTime: 26577,
-          bestLapTime: 24756,
-          totalTime: 105768,
-        },
-      ],
+      racers: [],
     },
     ui: {
-      rssiValue: 125, // TODO Remove
+      rssiValue: 0,
       loading: true,
-      deviceConnected: true, // TODO remove
+      deviceConnected: false,
       error: {},
+      raceStarted: false,
       activeRacer: 0,
+      racerColors: ['#9C27B0', '#C2185B', '#303F9F', '#0097A7', '#388E3C', '#FF5722'],
     },
   },
   composeEnhancers(applyMiddleware(thunk, socketMiddleware(socket))),
@@ -43,7 +32,6 @@ const store = createStore(
 // Dispatch all socket messages to the store
 // TODO This is dumb, need action creators
 socket.onmessage = (event) => {
-  console.log('socket onmessage', JSON.parse(event.data));
   store.dispatch(JSON.parse(event.data));
 };
 

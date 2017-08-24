@@ -42,16 +42,14 @@ export const requestPreviousChannel = id => ({
   id,
 });
 
-export const requestIncreaseThreshold = () => ({
+export const requestIncreaseThreshold = id => ({
   type: constants.REQUEST_INCREASE_THRESHOLD,
+  id,
 });
 
-export const requestDecreaseThreshold = () => ({
+export const requestDecreaseThreshold = id => ({
   type: constants.REQUEST_DECREASE_THRESHOLD,
-});
-
-export const requestSetThreshold = () => ({
-  type: constants.REQUEST_SET_THRESHOLD,
+  id,
 });
 
 export const requestToggleSound = () => ({

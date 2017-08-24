@@ -8,3 +8,21 @@ export const millisecondsToTime = (duration) => {
 
   return `${minutes}:${seconds}.${milliseconds}`;
 };
+
+export const longestLapTime = racers => (
+  racers.reduce((racerAcc, racer) => {
+    const nextRacerLongestLap = racer.lapTimes.reduce((timeAcc, time) => (
+      timeAcc > time ? timeAcc : time
+    ));
+    return racerAcc > nextRacerLongestLap ? racerAcc : nextRacerLongestLap;
+  }, -Infinity)
+);
+
+export const shortestLapTime = racers => (
+  racers.reduce((racerAcc, racer) => {
+    const nextRacerLongestLap = racer.lapTimes.reduce((timeAcc, time) => (
+      timeAcc < time ? timeAcc : time
+    ));
+    return racerAcc < nextRacerLongestLap ? racerAcc : nextRacerLongestLap;
+  }, Infinity)
+);

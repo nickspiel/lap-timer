@@ -39,8 +39,6 @@ injectGlobal`
     margin: 0;
     background-color: whitesmoke;
     color: darkgrey;
-    height: 100vh;
-    overflow: hidden;
     font-size: 16px;
   }
 `;

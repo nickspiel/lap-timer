@@ -9,12 +9,14 @@ const Wrapper = styled.div`
   display: ${props => (props.show ? 'block' : 'none')};
   position: fixed;
   bottom: 0;
+  left: 0;
   width: 100vw;
   background-color: ${props => props.theme.red};
   color: white;
   padding: 1rem;
   font-size: 1rem;
   animation: 0.3s ${slideUp};
+  z-index: 10;
 `;
 
 const Message = styled.p`

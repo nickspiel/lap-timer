@@ -20,12 +20,12 @@ const ToggleIcon = styled(Icon)`
   fill: white;
 `;
 
-const SetValueInput = ({ increment, decrement, value, ready }) => (
+const SetValueInput = ({ increment, decrement, value = '?', ready, displayValue }) => (
   <Wrapper>
     <Button disabled={!ready} onClick={decrement}>
       <ToggleIcon icon="minus" />
     </Button>
-    <Value>{ready ? value : '?'}</Value>
+    <Value>{ready ? displayValue || value : '?' }</Value>
     <Button disabled={!ready} onClick={increment}>
       <ToggleIcon icon="plus" />
     </Button>
@@ -39,6 +39,10 @@ SetValueInput.propTypes = {
     PropTypes.string,
     PropTypes.number,
   ]).isRequired,
+  displayValue: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ]),
   ready: PropTypes.bool.isRequired,
 };
 

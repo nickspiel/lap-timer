@@ -52,7 +52,7 @@ const Configuration = ({
   activeRacer,
   setActive,
 }) => (
-  <GridCell gridArea="racers">
+  <GridCell>
     <SubHeading>
       Racers
       <NumberOfRacers>
@@ -81,7 +81,7 @@ const Configuration = ({
 );
 
 Configuration.defaultProps = {
-  deviceConnected: false, // TODO Remove testing code
+  deviceConnected: false,
   racers: [],
 };
 

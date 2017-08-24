@@ -4,10 +4,8 @@ import WebSocket from 'ws';
 import * as constants from '../constants';
 import { collectMessages } from './messagingService';
 
-const BTserial = new (require('bluetooth-serial-port')).BluetoothSerialPort(); // TODO
-
+const BTserial = new (require('bluetooth-serial-port')).BluetoothSerialPort(); // TODO Use import if available
 const app = express();
-
 const server = http.createServer(app);
 const webSocketServer = new WebSocket.Server({ server });
 let socketService;
@@ -49,6 +47,7 @@ const getDeviceDetails = () => {
 
 const writeData = (code, id = 0) => {
   const buffer = new Buffer(`R${id}${code}\n`, 'utf8');
+
   BTserial.write(buffer, (err) => {
     if (err) throwError(`Could not write data for code R${id}${code}`);
   });
@@ -78,17 +77,17 @@ webSocketServer.on('connection', (ws) => {
     const actions = {
       [constants.REQUEST_DEVICE_LIST]: () => requestDeviceList(),
       [constants.REQUEST_CONNECT_DEVICE]: () => requestConnectDevice(data.address),
-      [constants.REQUEST_START_RACE]: () => writeData(constants.REQUEST_START_RACE),
-      [constants.REQUEST_END_RACE]: () => writeData(constants.REQUEST_END_RACE),
+      [constants.REQUEST_START_RACE]: () => writeData(constants.REQUEST_START_RACE, 0),
+      [constants.REQUEST_END_RACE]: () => writeData(constants.REQUEST_END_RACE, 0),
       [constants.REQUEST_INCREASE_MINIMUM_LAP_TIME]: () => writeData(constants.REQUEST_INCREASE_MINIMUM_LAP_TIME),
       [constants.REQUEST_DECREASE_MINIMUM_LAP_TIME]: () => writeData(constants.REQUEST_DECREASE_MINIMUM_LAP_TIME),
       [constants.REQUEST_PREVIOUS_BAND]: () => writeData(constants.REQUEST_PREVIOUS_BAND, data.id),
       [constants.REQUEST_NEXT_BAND]: () => writeData(constants.REQUEST_NEXT_BAND, data.id),
       [constants.REQUEST_PREVIOUS_CHANNEL]: () => writeData(constants.REQUEST_PREVIOUS_CHANNEL, data.id),
       [constants.REQUEST_NEXT_CHANNEL]: () => writeData(constants.REQUEST_NEXT_CHANNEL, data.id),
-      [constants.REQUEST_INCREASE_THRESHOLD]: () => writeData(constants.REQUEST_INCREASE_THRESHOLD),
-      [constants.REQUEST_DECREASE_THRESHOLD]: () => writeData(constants.REQUEST_DECREASE_THRESHOLD),
-      [constants.REQUEST_SET_THRESHOLD]: () => writeData(constants.REQUEST_SET_THRESHOLD),
+      [constants.REQUEST_INCREASE_THRESHOLD]: () => writeData(constants.REQUEST_INCREASE_THRESHOLD, data.id),
+      [constants.REQUEST_DECREASE_THRESHOLD]: () => writeData(constants.REQUEST_DECREASE_THRESHOLD, data.id),
+      [constants.REQUEST_SET_THRESHOLD]: () => writeData(constants.REQUEST_SET_THRESHOLD, data.id),
       [constants.REQUEST_TOGGLE_SOUND]: () => writeData(constants.REQUEST_TOGGLE_SOUND),
       [constants.REQUEST_START_CALIBRATION]: () => writeData(constants.REQUEST_START_CALIBRATION),
       [constants.REQUEST_END_CALIBRATION]: () => writeData(constants.REQUEST_END_CALIBRATION),

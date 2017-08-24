@@ -1,8 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import styled from 'styled-components';
 import DeviceButton, { deviceButtonPropTypes } from './DeviceButton';
 import StepValueInput from './StepValueInput';
+import Button from './Button';
 import {
   requestDecreaseMinimumLapTime,
   requestIncreaseMinimumLapTime,
@@ -13,17 +15,22 @@ import {
 } from '../store/actionCreators';
 import { Label, InputGroup, SubHeading, GridCell, GridContent } from './Elements';
 
+const CalibrateButton = styled(Button)`
+  display: none;
+`;
+
 const Configuration = ({
   decreaseLaps,
   increaseLaps,
   deviceConnected,
   devices,
+  racers,
   increaseMinimumLapTime,
   decreaseMinimumLapTime,
   minLapTime,
   laps,
 }) => (
-  <GridCell gridArea="configuration">
+  <GridCell>
     <SubHeading>Configuration</SubHeading>
     <GridContent>
       {!deviceConnected ?
@@ -53,14 +60,21 @@ const Configuration = ({
         </div>
       }
     </GridContent>
+    {deviceConnected && racers.length > 1 &&
+      <InputGroup>
+        {/* // TODO Calibrate timers */}
+        <CalibrateButton onClick={() => {}}>Calibrate Timers</CalibrateButton>
+      </InputGroup>
+    }
   </GridCell>
 );
 
 Configuration.defaultProps = {
-  deviceConnected: false, // TODO Remove testing code
+  deviceConnected: false,
   devices: [],
   minLapTime: '',
   laps: 0,
+  racers: [],
 };
 
 Configuration.propTypes = {
@@ -71,6 +85,7 @@ Configuration.propTypes = {
     PropTypes.number,
   ]),
   laps: PropTypes.number,
+  racers: PropTypes.array,
   decreaseLaps: PropTypes.func.isRequired,
   increaseLaps: PropTypes.func.isRequired,
   increaseMinimumLapTime: PropTypes.func.isRequired,
@@ -83,6 +98,7 @@ export default connect(
     deviceConnected: state.ui.deviceConnected,
     minLapTime: state.race.minLapTime,
     laps: state.race.laps,
+    racers: state.race.racers,
   }),
   {
     decreaseLaps: requestDecreaseLaps,

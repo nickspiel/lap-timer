@@ -54,10 +54,28 @@ const reducer = (state = {}, action) => {
       return ({
         ...state,
         racers: state.racers.map(racer => (
-          racer.id === action.id
-          ? { ...racer, rssiThreshold: action.value }
+          racer.id === action.data.id
+          ? { ...racer, rssiThreshold: action.data.value }
           : { ...racer }
         )),
+      });
+    case constants.SET_LAP_TIME:
+      return ({
+        ...state,
+        racers: state.racers.map(racer => (
+          racer.id === action.data.id
+          ? {
+            ...racer,
+            lastLapTime: action.data.value,
+            totalTime: (racer.totalTime || 0) + action.data.value,
+          }
+          : { ...racer }
+        )),
+      });
+    case constants.SET_RACE_STATUS:
+      return ({
+        ...state,
+        raceStarted: action.data === 1,
       });
     default:
       return state;

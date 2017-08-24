@@ -70,7 +70,6 @@ export const GridCell = styled.div`
   background-color: white;
   padding: 1rem;
   box-shadow: ${props => props.theme.shadow};
-  grid-area: ${props => props.gridArea};
   display: flex;
   flex-direction: column;
 `;

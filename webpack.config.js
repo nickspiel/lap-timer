@@ -37,7 +37,6 @@ module.exports = {
     port: 9000,
   },
   plugins: [
-    // new webpack.optimize.UglifyJsPlugin(), TODO IN PRODUCTION
     new HtmlWebpackPlugin({
       template: './src/index.html',
     }),
