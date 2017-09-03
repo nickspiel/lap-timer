@@ -2,6 +2,7 @@ import { createStore, compose, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import rootReducer from './reducers/root';
 import socketMiddleware from './socketMiddleware';
+import voiceMiddleware from './voiceMiddleware';
 
 // Create socket
 const socket = new WebSocket('ws://localhost:8080');
@@ -15,6 +16,7 @@ const store = createStore(
     race: {
       laps: 5,
       raceStarted: false,
+      firstLapComplete: false,
       racers: [],
     },
     ui: {
@@ -29,6 +31,9 @@ const store = createStore(
   },
   composeEnhancers(applyMiddleware(thunk, socketMiddleware(socket))),
 );
+
+// Initialise voice recognition
+voiceMiddleware(store);
 
 // Dispatch all socket messages to the store
 // TODO This is dumb, need action creators

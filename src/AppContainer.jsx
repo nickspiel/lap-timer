@@ -57,7 +57,7 @@ const AppContainer = ({ store }) => (
   <Provider store={store}>
     <ThemeProvider theme={theme}>
       <div>
-        <Header name="Lap Timer" />
+        <Header name="Chrono Drone" />
         <Main />
       </div>
     </ThemeProvider>

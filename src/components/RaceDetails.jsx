@@ -21,6 +21,9 @@ class RaceDetails extends Component {
     if (nextProps.raceStarted !== this.props.raceStarted) {
       speakLine(nextProps.raceStarted ? 'race has started' : 'race has finished');
     }
+    if (nextProps.firstLapComplete !== this.props.firstLapComplete) {
+      speakLine('timing');
+    }
   }
   render() {
     const {
@@ -60,6 +63,7 @@ RaceDetails.defaultProps = {
   raceStarted: false,
   deviceConnected: false,
   racers: [],
+  firstLapComplete: false,
 };
 
 RaceDetails.propTypes = {
@@ -67,12 +71,14 @@ RaceDetails.propTypes = {
   deviceConnected: PropTypes.bool,
   startRace: PropTypes.func.isRequired,
   endRace: PropTypes.func.isRequired,
+  firstLapComplete: PropTypes.bool,
 };
 
 export default connect(
   state => ({
     deviceConnected: state.ui.deviceConnected,
     raceStarted: state.race.raceStarted,
+    firstLapComplete: state.race.firstLapComplete,
   }),
   {
     startRace: requestStartRace,

@@ -62,10 +62,14 @@ const reducer = (state = {}, action) => {
     case constants.SET_LAP_TIME:
       return ({
         ...state,
+        firstLapComplete: true,
         racers: state.racers.map(racer => (
-          racer.id === action.data.id
+          racer.id === action.data.id && state.firstLapComplete
           ? {
             ...racer,
+            bestLapTime: (!racer.bestLapTime || action.data.value < racer.bestLapTime)
+              ? action.data.value
+              : racer.bestLapTime,
             lastLapTime: action.data.value,
             totalTime: (racer.totalTime || 0) + action.data.value,
           }

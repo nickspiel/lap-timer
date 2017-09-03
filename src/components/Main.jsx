@@ -33,7 +33,9 @@ const Column = styled.div`
 
 const ConfigurationColumn = styled(Column)`
   width: 100%;
-  max-width: 20rem;
+  @media (min-width: 800px) {
+    max-width: 20rem;
+  }
 `;
 
 const RaceColumn = styled(Column)`

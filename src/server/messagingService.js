@@ -16,13 +16,11 @@ export const translateIncomming = (sendMessage, buffer) => {
   let code;
 
   if (matches) {
-    console.log(matches);
     // Remove the full match if a match is made
     matches.shift();
 
     // Join the matched pattern and strip numbers
     code = matches.join('').replace(/\d+/g, '');
-    console.log('code', code);
   }
 
   const actions = {
@@ -76,6 +74,7 @@ export const translateIncomming = (sendMessage, buffer) => {
     }),
     SL: () => {
       const [match, id, value] = message.match(/S([0-9])L..([A-Za-z0-9]*)/);// eslint-disable-line
+
       return ({
         type: constants.SET_LAP_TIME,
         data: {

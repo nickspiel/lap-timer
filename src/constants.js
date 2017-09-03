@@ -45,3 +45,12 @@ export const SET_RSSI_STATUS = 'SET_RSSI_STATUS';
 export const SET_SKIP_FIRST_LAP = 'SET_SKIP_FIRST_LAP';
 export const SET_RSSI_VALUE = 'SET_RSSI_VALUE';
 export const SET_LAP_TIME = 'SET_LAP_TIME';
+
+// Voice commands
+export const VOICE_COMMANDS = [{
+  words: ['start', 'go', 'bang'],
+  action: REQUEST_START_RACE,
+},{
+  words: ['stop', 'end', 'finish'],
+  action: REQUEST_END_RACE,
+}];
